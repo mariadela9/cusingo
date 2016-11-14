@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block script %}
+<script src="/static/js/post.js"></script>
+{% endblock %}
+{% block title %}Create post{% endblock %}
+{% block menu %}
+    <ul class="menu">
+       {% if user %}
+        <li id="home"><a href="/">Home</a></li>
+        <li id="post" class="current"><a href="/post/new">Post</a></li>
+        <li id="logout"><a href="/sessions/delete">Log Out</a></li>
+        <li id="user">Hi, {{ user }}</li>
+    {% else %}
+        <li id="home" class="current"><a href="/">Home</a></li>
+        <li id="signin"><a href="/sessions/new">Log In</a></li>
+    {% endif %}
+    </ul>
+{% endblock %}
+{% block content %}
+    <div>
+        <form method="post" action="/post">
+            <h1>Create Post</h1>
+
+            <div class="box">
+                <label for="title">Title: </label>
+                <input type="text" id="title" name="title">
+            </div>
+
+
+            <div class="box"><label for="content">Content: </label></div>
+            <div class="box"><textarea id="content" name="content"></textarea></div>
+
+            <button type="submit" id="post_post" disabled="disabled">Create</button>
+        </form>
+    </div>
+{% endblock %}

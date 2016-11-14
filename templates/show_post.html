@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}{{ info.title }}{% endblock %}
+{% block menu %}
+    <ul class="menu">
+       {% if user %}
+        <li id="home" class="current"><a href="/">Home</a></li>
+        <li id="post"><a href="/post/new">Post</a></li>
+        <li id="logout"><a href="/sessions/delete">Log Out</a></li>
+        <li id="user">Hi, {{ user }}</li>
+    {% else %}
+        <li id="home" class="current"><a href="/">Home</a></li>
+        <li id="signin"><a href="/sessions/new">Log In</a></li>
+    {% endif %}
+    </ul>
+{% endblock %}
+{% block content %}
+    <div>
+        <h1>{{ info.title }}</h1>
+
+        <div class="box">
+            <label>Author: </label>
+            <div>{{ info.author }}</div>
+        </div>
+
+        <div class="box"><label>Content: </label></div>
+        <div class="box"><span>{{ info.content }}</span></div>
+
+        {% if info.author == user %}<a href="/post/{{ info.id }}/edit">Edit</a>{% endif %}
+        {% if user == 'admin' %}<a href="/post/{{ info.id }}/edit">Edit</a>{% endif %}
+
+
+        <h3>Comments:</h3>
+
+        {% for comments in list_comments %}
+            <div class="list_comments" id="{{ comments.id }}">
+            <div>title: <span>{{ comments.title }}</span></div>
+            <div>author: <span>{{ comments.author }}</span></div>
+            <div>content: <span>{{ comments.content }}</span></div>
+            {% if comments.author == user %}
+                <button type="submit" id="comment_{{ comments.id }}_delete" class='purple comment_delete' action="/comments/{{ comments.id }}/delete">
+                    Delete
+                </button>
+            {% endif %}
+            {% if user == 'admin' %}
+                <button  type="submit" id="comment_{{ comments.id }}_delete" class='purple comment_delete' action="/comments/{{ comments.id }}/delete">
+                    Delete
+                </button>
+            {% endif %}
+
+            </div>
+        {% endfor %}
+        <div id="comment_place"></div>
+        {% if user %}
+        <form>
+            <label for="title">title:</label>
+            <input id="title" name="title" type="text"/>
+            <label for="content">content:</label>
+            <textarea id="content" name="content"></textarea>
+            <button class="purple" type="button" id="comment_submit" action="/comments/{{ info.id }}">Comment</button>
+        </form>
+        {% else %}
+            <div><a href="/user/new">Log in</a> to make a comment</div>
+        {% endif %}
+        </div>
+{% endblock %}
