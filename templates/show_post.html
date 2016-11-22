@@ -25,9 +25,7 @@
         <div class="box"><label>Content: </label></div>
         <div class="box"><span>{{ info.content }}</span></div>
 
-        {% if info.author == user %}<a href="/post/{{ info.id }}/edit">Edit</a>{% endif %}
-        {% if user == 'admin' %}<a href="/post/{{ info.id }}/edit">Edit</a>{% endif %}
-
+        {% if info.author == user or user == 'admin' %}<a href="/post/{{ info.id }}/edit">Edit</a>{% endif %}
 
         <h3>Comments:</h3>
 
@@ -36,17 +34,11 @@
             <div>title: <span>{{ comments.title }}</span></div>
             <div>author: <span>{{ comments.author }}</span></div>
             <div>content: <span>{{ comments.content }}</span></div>
-            {% if comments.author == user %}
+            {% if comments.author == user or user == 'admin' %}
                 <button type="submit" id="comment_{{ comments.id }}_delete" class='purple comment_delete' action="/comments/{{ comments.id }}/delete">
                     Delete
                 </button>
             {% endif %}
-            {% if user == 'admin' %}
-                <button  type="submit" id="comment_{{ comments.id }}_delete" class='purple comment_delete' action="/comments/{{ comments.id }}/delete">
-                    Delete
-                </button>
-            {% endif %}
-
             </div>
         {% endfor %}
         <div id="comment_place"></div>
