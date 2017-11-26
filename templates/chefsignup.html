@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block script %}
+<script src="/static/js/signup.js"></script>
+{% endblock %}
+{% block title %}Sign up{% endblock %}
+{% block menu %}
+    <ul class="menu">
+        <li id="home"><a href="/">Home</a></li>
+        <li id="signin" ><a href="/sessions/new">Log In/Sign up</a></li>
+    </ul>
+{% endblock %}
+{% block content %}
+    <div>
+        <form id="chefsignup_form" method="post" action="/chef">
+            <h1>Sign up</h1>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{username}}"/>
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" value="{{email}}"/>
+
+            <input id="text" type="text" placeholder="Hours" name="hours" value="{{hours}}"/>
+
+            <label for="password">Password:</label>
+            <input type="password"  id="password" name="password" class="password"/>
+
+            <label for="password2" id="label_password2">Repeat Password:</label>
+            <input type="password" id="password2" name="password2" class="password"/>
+
+            <button class="red" id="signup" type="submit" disabled="disabled">Sign up</button>
+
+            {% if error == True %}
+            <div class="notice error" id="username_exist"><i class="icon-remove-sign icon-large"></i>
+            username already exists, try again.<a href="#close" class="icon-remove"></a></div>
+            {% endif %}
+
+            <div class="notice error" id="passwords_match" hidden><i class="icon-remove-sign icon-large"></i>
+            passwords must match, try again.</div>
+        </form>
+    </div>
+
+
+{% endblock %}

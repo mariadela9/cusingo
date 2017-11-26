@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block menu %}
+    <ul class="menu">
+    {% if user %}
+        <li id="home" ><a href="/">Home</a></li>
+        <li id="post"><a href="/post/new">Post</a></li>
+         <li id="schedule"><a href="/schedule/new">Schedule Kitchen</a></li>
+        <li id="cookfood"><a href="/cookfood/new">Cook</a></li>
+        <li id="placeorder"><a href="/placeorder/new">Order</a></li>
+        <li id="deliver"><a href="/deliver/new">Deliver</a></li>
+        <li id="logout"><a href="/sessions/delete">Log Out</a></li>
+        <li id="user">Hi, {{ user }}</li>
+    {% else %}
+        <li id="home" class="current" ><a href="/">Home</a></li>
+        <li id="signin"><a href="/sessions/new">Log In/Sign up</a></li>
+    {% endif %}
+    </ul>
+{% endblock %}
+{% block content %}
+    <div>
+    {% if list %}
+    {% for kitchen in list %}
+        <div class="list_of_post">
+        <p class="author">
+            Kitchen's Name: <span>{{ kitchen[1] }}</span>
+        </p>
+        <p>
+            Kitchen's Address: <span>{{ kitchen[3] }}</a></span>
+        </p>
+            <form method="post" action="/kitchen/{{ user }}/{{ kitchen[0] }}">
+                <button type="submit" id="post_post" >Schedule</button>
+            </form>
+    {% endfor %}
+
+    {% else %}
+       <p>No kitchens available at this time, please check again later.</p>
+    {% endif %}
+    </div>
+{% endblock %}

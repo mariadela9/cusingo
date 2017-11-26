@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block menu %}
+    <ul class="menu">
+       {% if user %}
+        <li id="home" class="current"><a href="/">Home</a></li>
+        <li id="logout"><a href="/sessions/delete">Log Out</a></li>
+        <li id="user">Hi, {{ user }}</li>
+    {% else %}
+        <li id="home" class="current"><a href="/">Home</a></li>
+        <li id="signin"><a href="/sessions/new">Log In</a></li>
+    {% endif %}
+    </ul>
+{% endblock %}
+{% block content %}
+    <div>
+        <h1>Your order will be delivered in an estimate of 20 minutes</h1>
+    </div>
+{% endblock %}

@@ -1,6 +1,4 @@
-/**
- * Created by carlos on 11/6/16.
- */
+
 $(document).ready(function() {
     $(".password").keyup(check_passwords)
 });

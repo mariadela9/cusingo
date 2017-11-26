@@ -13,15 +13,21 @@
     <div>
         <form id="login_form" method="post" action="/sessions">
             <h1>Log in</h1>
-            <label for="username">Username:</label>
+            <label for="username">Email:</label>
             <input type="text" id="username" name="username" value="{{ username }}"/>
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password"/>
 
-            <div>Or Sign Up<a href="/user/new">here</a></div>
 
-            <button class='purple' id="login_button" type="submit" disabled="disabled">log in</button>
+
+            <div><a href="/chef/new">Chef</a></div>
+            <div><a href="/driver/new">Driver</a></div>
+            <div><a class= "button" href="/customer/new">Customer</a></div>
+
+
+
+            <button class='red' id="login_button" type="submit" disabled="disabled">log in</button>
             {% if error %}
             <div class="notice error" id="error"><i class="icon-remove-sign icon-large"></i>
             username or password is incorrect, try again.<a href="#close" class="icon-remove"></a></div>

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block script %}
+<script src="/static/js/signup.js"></script>
+{% endblock %}
+{% block title %}Sign up{% endblock %}
+{% block menu %}
+   <ul class="menu">
+        <li id="home"><a href="/">Home</a></li>
+        <li id="signin" > <a  href="/sessions/new">Log In/Sign up</a></li>
+    </ul>
+{% endblock %}
+{% block content %}
+    <div>
+        <form id="driversignup_form" method="post" action="/driver">
+            <h6>Deliver the best food at your own time!</h6>
+
+
+              <input id="text" type="text" placeholder="Username" name="username" value="{{username}}"/>
+
+
+
+            <input id="text" type="text" placeholder="Email" name="email" value="{{email}}"/>
+
+
+
+            <input id="text" type="text" placeholder="Model of your car" name="carmodel" value="{{carmodel}}"/>
+
+
+            <input id="text" type="text" placeholder="Make of your car" name="carmake" value="{{carmake}}"/>
+
+
+            <input id="text" type="text" placeholder="Year of your car" name="caryear" value="{{caryear}}"/>
+
+
+            <input id="text" type="text" placeholder="Hours" name="hours" value="{{hours}}"/>
+
+
+            <input id="text" type="text" placeholder="Password" name="password" class="password"/>
+
+
+            <input id="text2" type="text" placeholder="Repeat Password" name="password2" class="password"/>
+
+
+            <button class="red" id="signup" type="submit" disabled="disabled">Sign up</button>
+
+            {% if error == True %}
+            <div class="notice error" id="username_exist"><i class="icon-remove-sign icon-large"></i>
+            username already exists, try again.<a href="#close" class="icon-remove"></a></div>
+            {% endif %}
+
+            <div class="notice error" id="passwords_match" hidden><i class="icon-remove-sign icon-large"></i>
+            passwords must match, try again.</div>
+          </ul>
+        </form>
+
+    </div>
+
+    <div>
+
+</div>
+
+
+
+{% endblock %}

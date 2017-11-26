@@ -1,6 +1,53 @@
-h1 {
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+
+.button {
+    display: block;
+    width: 115px;
+    height: 25px;
+    background: #4E9CAF;
+    padding: 10px;
     text-align: center;
-    color: rgb(122, 10, 238);
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+
+
+h1 {
+    font-style: oblique;
+    text-align: center;
+    color: rgb(255,69,0);
 }
 #username_log, #username_sign, #password_log, #password_sign, #password2_sign, #title {
     width: 100%;
@@ -16,8 +63,8 @@ h1 {
 }
 #login, #signup {
     width: 100%;
-    background-color: rgb(122, 10, 238);
-    color: white;
+    background-color: red;
+    color: red;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -46,5 +93,5 @@ div {
 .content {
     float: left;
     margin: 5px 5px;
-    border: rgb(122, 10, 238)
+    border: rgb(255,69,0)
 }

@@ -11,12 +11,18 @@ def login_form():
 
 @sessions.route('/', methods=['POST'] , strict_slashes=False)
 def login():
-    username = request.form['username']
+    email = request.form['username']
     password = request.form['password']
-    if check_user(username, password):
-        session['username'] = username
+    if check_user(email, password):
+        session['username'] = email
+        if check_customer(email):
+            render_template('customer_menu.html', username=email)
+        elif check_chef(email):
+            render_template('chef_menu.html', username=email)
+        elif check_driver(email):
+            render_template('driver_menu.html', username=email)
         return redirect(url_for('index'))
-    return render_template('login.html', username=username, error=True)
+    return render_template('login.html', username=email, error=True)
 
 
 @sessions.route('/delete', strict_slashes=False)
