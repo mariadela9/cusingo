@@ -1,7 +1,9 @@
 {% extends "base.html" %}
+
 {% block script %}
 <script src="/static/js/login.js"></script>
 {% endblock %}
+
 {% block title %}log in{% endblock %}
 {% block menu %}
     <ul class="menu">
@@ -11,27 +13,37 @@
 {% endblock %}
 {% block content %}
     <div>
-        <form id="login_form" method="post" action="/sessions">
-            <h1>Log in</h1>
-            <label for="username">Email:</label>
-            <input type="text" id="username" name="username" value="{{ username }}"/>
+        <div class= "login-container">
+            <form id="login_form" method="post" action="/sessions">
+                <h1>CUISINGO</h1>
+                <h3>Log In</h3>
+                <label for="username">Email:</label>
+                <input type="text" id="username" name="username" value="{{ username }}"/>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password"/>
-
-
-
-            <div><a href="/chef/new">Chef</a></div>
-            <div><a href="/driver/new">Driver</a></div>
-            <div><a class= "button" href="/customer/new">Customer</a></div>
+                <label for="password">Password:</label>
+                <input type="text" id="password" name="password"/>
 
 
+                <button class='login_button' type="submit" >Log in</button>
+                {% if error %}
+                <div class="notice error" id="error"><i class="icon-remove-sign icon-large"></i>
+                username or password is incorrect, try again.<a href="#close" class="icon-remove"></a></div>
+                {% endif %}
 
-            <button class='red' id="login_button" type="submit" disabled="disabled">log in</button>
-            {% if error %}
-            <div class="notice error" id="error"><i class="icon-remove-sign icon-large"></i>
-            username or password is incorrect, try again.<a href="#close" class="icon-remove"></a></div>
-            {% endif %}
-        </form>
+                <h4>Not a Cusingo Member?</h4>
+                <label for="username">Sign-up as a:</label>
+
+                <div>
+                    <a class ="button" href="/chef/new" style="text-decoration:none">Chef</a>
+                    <a class ="button" href="/driver/new" style="text-decoration:none">Driver</a>
+                    <a class= "button" href="/customer/new" style="text-decoration:none">Customer</a>
+                    <a class= "button" href="/admin/new" style="text-decoration:none">Admin</a>
+                </div>
+
+                <div>
+
+                </div>
+             </form>
+        </div>
     </div>
 {% endblock %}

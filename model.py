@@ -508,3 +508,18 @@ def get_total():
     for d in ds:
         total += int(d)
     return total
+
+def get_order():
+
+    return
+
+def get_chefs():
+    connect()
+    conn = sqlite3.connect('blog.db')
+    c = conn.cursor()
+    c.execute('select * chefID from chefs')
+    return c.fetchall()
+
+def get_drivers():
+    return
+
