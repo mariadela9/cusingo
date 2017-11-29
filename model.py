@@ -518,7 +518,8 @@ def get_chefs():
     conn = sqlite3.connect('blog.db')
     c = conn.cursor()
     c.execute('select * chefID from chefs')
-    return c.fetchall()
+    chef_list = list(c.fetchall())
+    return chef_list
 
 def get_drivers():
     return

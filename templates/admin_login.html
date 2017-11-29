@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block script %}
+<script src="/static/js/admin_login.js"></script>
+{% endblock %}
+
+{% block title %}log in{% endblock %}
+{% block menu %}
+    <ul class="menu">
+        <li id="home"><a href="/">Home</a></li>
+        <li id="signin" class="current"><a href="/sessions/new">Log In</a></li>
+    </ul>
+{% endblock %}
+{% block content %}
+    <div>
+        <div class= "login-container">
+            <form id="login_form" method="post" action="/admin">
+                <h1>CUISINGO</h1>
+                <h3>Log In - Admin</h3>
+                <label for="username">Email:</label>
+                <input type="text" id="username" name="username" value="{{ username }}"/>
+
+                <label for="password">Password:</label>
+                <input type="text" id="password" name="password"/>
+
+
+                <button class='login_button' type="submit" >Log in</button>
+                {% if error %}
+                <div class="notice error" id="error"><i class="icon-remove-sign icon-large"></i>
+                username or password is incorrect, try again.<a href="#close" class="icon-remove"></a></div>
+                {% endif %}
+
+             </form>
+        </div>
+    </div>
+{% endblock %}

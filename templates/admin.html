@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}log in{% endblock %}
+{% block menu %}
+    <ul class="menu">
+        <li id="home"><a href="/">Home</a></li>
+        <li id="signin" class="current"><a href="/sessions/new">Log In</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome, admin logged in!</h1>
+
+    <div>
+        <a class ="admin_button" href="" style="text-decoration:none">Order</a>
+        <a class ="admin_button" href="" style="text-decoration:none">Driver</a>
+        <a class= "admin_button" href="" style="text-decoration:none">Chef</a>
+    </div>
+
+
+{% endblock %}
