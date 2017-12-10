@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block menu %}
+    <ul class="menu">
+    {% if user %}
+        <li id="home" ><a href="/">Home</a></li>
+        <li id="order"><a href="/deliver/new">Deliver Order</a></li>
+        <li id="logout"><a href="/sessions/delete">Log Out</a></li>
+        <li id="user">Hi, {{ user }}</li>
+    {% else %}
+        <li id="home" class="current" ><a href="/">Home</a></li>
+        <li id="signin"><a href="/sessions/new">Log In/Sign up</a></li>
+    {% endif %}
+    </ul>
+{% endblock %}
+{% block content %}
+    <div>
+    <h4> Food Plates </h4>
+    {% if list %}
+      {% for plate in list %}
+          <div class="list_of_post">
+          <p class="author">
+              Status: <span>{{ plate[2] }}</span>
+          </p>
+          <p>
+              Category: <span>{{ plate[3] }}</a></span>
+          </p>
+          <p>
+              Price: <span>{{ plate[1] }}</a></span>
+          </p>
+              <form method="post" action="/deliver/{{ user }}/{{ plate[0] }}">
+                  <button type="submit" id="post_post" >Deliver</button>
+              </form>
+      {% endfor %}
+    {% else %}
+       <p>No offered plates right now, please check again later.</p>
+    {% endif %}
+    </div>
+{% endblock %}

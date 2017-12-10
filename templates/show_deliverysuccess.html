@@ -1,10 +1,9 @@
 {% extends "base.html" %}
-
+{% block title %}{% endblock %}
 {% block menu %}
     <ul class="menu">
        {% if user %}
-        <li id="home" ><a href="/">Home</a></li>
-        <li id="post"><a href="/order/new">Place an Order</a></li>
+        <li id="home" class="current"><a href="/">Home</a></li>
         <li id="logout"><a href="/sessions/delete">Log Out</a></li>
         <li id="user">Hi, {{ user }}</li>
     {% else %}
@@ -14,5 +13,7 @@
     </ul>
 {% endblock %}
 {% block content %}
-
+    <div>
+        <h1>Ready to deliver!</h1>
+    </div>
 {% endblock %}

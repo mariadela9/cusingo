@@ -58,25 +58,13 @@ def set_db():
               'hours int, '
               'FOREIGN KEY (chefID) REFERENCES users(userID) )')
 
-    c.execute('CREATE TABLE IF NOT EXISTS foodOrder('
+    c.execute('CREATE TABLE IF NOT EXISTS foods('
               'orderID integer PRIMARY KEY autoincrement, '
-              'totalPrice double NOT NULL,'
-              'status text NOT NULL,'
-              'dateTime DATETIME NOT NULL DEFAULT(GETDATE()) ) ')
-
-
-    c.execute('CREATE TABLE IF NOT EXISTS drinks('
-              'drinkID int NOT NULL, '
-              'price double NOT NULL, '
-              'name text NOT NULL, '
-              'FOREIGN KEY(drinkID) REFERENCES foodOrder(orderID) )')
-
-    c.execute('CREATE TABLE IF NOT EXISTS plates('
-              'plateID int NOT NULL, '
-              'price double NOT NULL, '
+              'price double NOT NULL,'
               'name text NOT NULL,'
               'category text NOT NULL,'
-              'FOREIGN KEY(plateID) REFERENCES foodOrder(orderID) )')
+              'status text NOT NULL,'
+              'dateTime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP) ')
 
     c.execute('CREATE TABLE IF NOT EXISTS schedules('
               'kitchenID text NOT NULL, '
@@ -99,6 +87,14 @@ def set_db():
               'chefID text NOT NULL,'
               'orderID int NOT NULL )')
 
+    c.execute('CREATE TABLE IF NOT EXISTS orders('
+          'cartID integer PRIMARY KEY autoincrement, '
+          'orderID text NOT NULL,'
+          'price double NOT NULL,'
+          'dstatus double NOT NULL,'
+          'FOREIGN KEY (orderID) REFERENCES foods(orderID) )')
+
+
     c.execute('CREATE TABLE IF NOT EXISTS post ('
               'id integer primary key autoincrement, '
               'title text, '
@@ -113,6 +109,7 @@ def set_db():
               'post_id int)')
 
     c.execute('insert into kitchens(kitchenID, name, status, address) values("testKitchen", "wildcat", "available", "some address")')
+
 
 
     conn.commit()
@@ -189,47 +186,38 @@ def set_car(carID, model, make, year):
     else:
         return False
 
-def set_foodOrder(foodType, total):
+
+def set_make(chefID, orderID):
     connect()
     conn = sqlite3.connect("blog.db")
     c = conn.cursor()
-    data = (foodType, total)
-    c.execute("select orderID from foodOrders where orderID = ?", [orderID])
+    data = (chefID, orderID)
+    c.execute("select chefID, orderID from makes where chefID = ? and orderID = ? ", data)
     user = c.fetchall()
     if user == []:
-        c.execute("insert into foodOrders(type, total) values(?, ?)", data)
+        c.execute("insert into makes(chefID, orderID) values(?, ?) ", data)
         conn.commit()
         return True
     else:
         return False
 
-def set_drink(order, price, name):
-    connect()
-    conn = sqlite3.connect("blog.db")
-    c = conn.cursor()
-    data = (order, price, name)
-    c.execute("select order from drinks where order = ?", [order])
-    user = c.fetchall()
-    if user == []:
-        c.execute("insert into drinks(order, price, name) values(?, ?, ?) ", data)
-        conn.commit()
-        return True
-    else:
-        return False
 
-def set_plate(order, price, name):
+def set_foodOrder(price, name, category):
     connect()
     conn = sqlite3.connect("blog.db")
     c = conn.cursor()
-    data = (order, price, name)
-    c.execute("select order from foodPlates where order = ?", [order])
+    data = (price, name, category, "available")
+    c.execute("select price, name, category from foods where price = ? and name = ? and category = ? and status = ?", data)
     user = c.fetchall()
     if user == []:
-        c.execute("insert into foodPlates(order, price, name) values(?, ?, ?) ", data)
+        c.execute("insert into foods(price, name, category,status) values(?, ?, ?,?)", data)
+        c.execute("select orderID from foods where price = ? and name = ? and category = ? ", (price, name, category))
+        oid = c.fetchall()
         conn.commit()
-        return True
+        return oid
     else:
-        return False
+        return None
+
 
 
 def set_schedule(kitchenID, chefID, time):
@@ -244,7 +232,6 @@ def set_schedule(kitchenID, chefID, time):
     if user == []:
         c.execute("insert into schedules(kitchenID, chefID, time) values(?, ?, ?) ", data)
         conn.commit()
-        print("inserted")
         return True
     else:
         return False
@@ -276,7 +263,7 @@ def set_deliver(driverID, orderID):
         conn.commit()
         return True
     else:
-        return False
+        return True
 
 def set_pay(email, orderID):
     connect()
@@ -287,20 +274,6 @@ def set_pay(email, orderID):
     user = c.fetchall()
     if user == []:
         c.execute("insert into pays(email, orderID) values(?, ?) ", data)
-        conn.commit()
-        return True
-    else:
-        return False
-
-def set_make(chefID, orderID):
-    connect()
-    conn = sqlite3.connect("blog.db")
-    c = conn.cursor()
-    data = (chefID, orderID)
-    c.execute("select chefID, orderID from makes where chefID = ? and orderID = ? ", data)
-    user = c.fetchall()
-    if user == []:
-        c.execute("insert into makes(chefID, orderID) values(?, ?) ", data)
         conn.commit()
         return True
     else:
@@ -509,18 +482,57 @@ def get_total():
         total += int(d)
     return total
 
-def get_order():
 
-    return
+def get_orders():
+    connect()
+    conn = sqlite3.connect('blog.db')
+    c = conn.cursor()
+    c.execute("select * from orders")
+    return c.fetchall()
+
 
 def get_chefs():
     connect()
     conn = sqlite3.connect('blog.db')
     c = conn.cursor()
-    c.execute('select * chefID from chefs')
+    c.execute('select * from chefs')
     chef_list = list(c.fetchall())
     return chef_list
 
 def get_drivers():
     return
 
+
+def get_foods():
+    connect()
+    conn = sqlite3.connect('blog.db')
+    c = conn.cursor()
+    c.execute("select * from foods where status = 'available' ")
+    food_list = list(c.fetchall())
+    print(food_list)
+    return food_list
+
+
+def get_orderprice(order_id):
+    connect()
+    conn = sqlite3.connect('blog.db')
+    c = conn.cursor()
+    c.execute("select price from foods where orderID = ?", order_id)
+    price = c.fetchall()
+    return price[0]
+
+
+def set_finalorder(order_id, price):
+    connect()
+    conn = sqlite3.connect("blog.db")
+    c = conn.cursor()
+    data = (order_id, price[0], "available")
+    c.execute("select orderID, price from orders where orderID = ? and price = ? and dstatus = ?", data)
+    user = c.fetchall()
+    if user == []:
+        c.execute("insert into orders(orderID, price, dstatus) values(?, ?, ?) ", data)
+        c.execute("update foods set status = 'unavailable' where orderID = ? ", order_id)
+        conn.commit()
+        return True
+    else:
+        return False

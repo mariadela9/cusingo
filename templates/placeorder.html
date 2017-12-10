@@ -4,8 +4,7 @@
     <ul class="menu">
     {% if user %}
         <li id="home" ><a href="/">Home</a></li>
-        <li id="cookfood"><a href="/cookfood/new">Cook</a></li>
-        <li id="placeorder"><a href="/placeorder/new">Order</a></li>
+        <li id="order"><a href="/order/new">Place Order</a></li>
         <li id="logout"><a href="/sessions/delete">Log Out</a></li>
         <li id="user">Hi, {{ user }}</li>
     {% else %}
@@ -18,37 +17,21 @@
     <div>
     <h4> Food Plates </h4>
     {% if list %}
-    {% for plate in list %}
-        <div class="list_of_post">
-        <p class="author">
-            Plate: <span>{{ plate[2] }}</span>
-        </p>
-        <p>
-            Category: <span>{{ plate[3] }}</a></span>
-        </p>
-        <p>
-            Price: <span>{{ plate[1] }}</a></span>
-        </p>
-            <form method="post" action="/order/plate/{{ user }}/{{ order[0] }}">
-                <button type="submit" id="post_post" >Add to Order</button>
-            </form>
-    {% endfor %}
-    <h4> Drinks </h4>
-    {% if list %}
-    {% for drink in list %}
-        <div class="list_of_post">
-        <p class="author">
-            Drink: <span>{{ plate[1] }}</span>
-        </p>
-        <p>
-            Price: <span>{{ plate[3] }}</a></span>
-        </p>
-            <form method="post" action="/order/drink/{{ user }}/{{ order[0] }}">
-                <button type="submit" id="post_post" >Add to Order</button>
-            </form>
-    {% endfor %}
-
-
+      {% for plate in list %}
+          <div class="list_of_post">
+          <p class="author">
+              Name: <span>{{ plate[2] }}</span>
+          </p>
+          <p>
+              Category: <span>{{ plate[3] }}</a></span>
+          </p>
+          <p>
+              Price: <span>{{ plate[1] }}</a></span>
+          </p>
+              <form method="post" action="/order/{{ user }}/{{ plate[0] }}">
+                  <button type="submit" id="post_post" >Buy</button>
+              </form>
+      {% endfor %}
     {% else %}
        <p>No offered plates right now, please check again later.</p>
     {% endif %}

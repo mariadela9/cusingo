@@ -7,11 +7,15 @@ from driver import driver
 from chef import chef
 from schedulekitchen import kitchen
 from admin import admin
-
+from offerorder import offer
 from placeorder import order
+from deliver import deliver
 
 app = Flask(__name__)
+app.register_blueprint(deliver, url_prefix='/deliver')
+app.register_blueprint(order, url_prefix='/order')
 app.register_blueprint(customer, url_prefix='/customer')
+app.register_blueprint(offer, url_prefix='/offer')
 app.register_blueprint(chef, url_prefix='/chef')
 app.register_blueprint(driver, url_prefix='/driver')
 app.register_blueprint(sessions, url_prefix='/sessions')
