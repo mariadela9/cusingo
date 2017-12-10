@@ -3,8 +3,8 @@ import os
 
 
 def connect():
-    has_db = os.path.isfile('blog.db')
-    conn = sqlite3.connect('blog.db')
+    has_db = os.path.isfile('cuisingo.db')
+    conn = sqlite3.connect('cuisingo.db')
 
     if not has_db:
         set_db()
